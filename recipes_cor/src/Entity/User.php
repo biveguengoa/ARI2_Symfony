@@ -171,6 +171,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->booksBorrowed->contains($booksBorrowed)) {
             $this->booksBorrowed->add($booksBorrowed);
             $booksBorrowed->setBorrowedBy($this);
+            $booksBorrowed->setAvailable(false);
+            $booksBorrowed->setBorrowedAt(new \DateTimeImmutable());
         }
 
         return $this;
@@ -182,6 +184,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($booksBorrowed->getBorrowedBy() === $this) {
                 $booksBorrowed->setBorrowedBy(null);
+                $booksBorrowed->setAvailable(true);
+                $booksBorrowed->setBorrowedAt(null);
             }
         }
 

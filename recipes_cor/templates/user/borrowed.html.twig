@@ -4,10 +4,7 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Livres</h1>
-
-        <a href="{{ path('book.create') }}" class="btn btn-primary">New book</a>
-
+        <h1>Livres empruntés</h1>
         {% for message in app.flashes('error') %}
             <div class="alert alert-dismissible alert-danger mt-4">
                 {{ message }}
@@ -18,7 +15,6 @@
                 {{ message }}
             </div>
         {% endfor %}
-
         {% if books %}
         
             <table class="table table-hover">
@@ -26,7 +22,6 @@
                 <tr>
                 <th scope="col">Titre</th>
                 <th scope="col">Categorie</th>
-                <th scope="col">Disponibilité</th>
                 <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -35,21 +30,13 @@
                     <tr class="table-light">
                         <th scope="row">{{ book.title }}</th>
                         <td>{{ book.formatCategories }}</td>
-                        <td>
-                            {% if book.available %}
-                                Oui
-                            {% else %}
-                                Non
-                            {% endif %}
-                        </td>
-                        <td colspan="2"><a href="{{ path('book.edit', {id: book.id}) }}" class="badge rounded-pill bg-info">Edit</a></td>
-                        <td><a href="{{ path('book.delete', {id: book.id}) }}" class="badge rounded-pill bg-danger">Delete</a></td>
+                        <td><a href="{{ path('book.borrowed', {id: book.id}) }}" class="badge rounded-pill bg-danger">Restituer</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
             </table>
         {% else %}
-            <p class="text-warning">Vous n'avez pas encore ajouté de livres !</p> 
+            <p class="text-warning">Vous n'avez emprunté aucun livre !</p> 
         {% endif %}
     </div>
 {% endblock %}

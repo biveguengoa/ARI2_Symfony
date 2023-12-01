@@ -29,6 +29,14 @@ class BookRepository extends ServiceEntityRepository
         ->getResult();
     }
 
+    public function findBorrowedByTheUser(array $criteria) : array {
+        return $this->createQueryBuilder("b")
+        ->andWhere("b.borrowedBy = :userId")
+        ->setParameter("userId", $criteria["theUser"])
+        ->getQuery()
+        ->getResult();
+    }
+
 //    /**
 //     * @return Book[] Returns an array of Book objects
 //     */

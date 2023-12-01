@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Library - Books{% endblock %}
+
+{% block body %}
+    <div class="container mt-4 w-50">
+        <h1>Livres disponibles</h1>
+        {#
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-dismissible alert-danger mt-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-dismissible alert-success mt-4">
+                {{ message }}
+            </div>
+        {% endfor %} #}
+        {% if books %}
+            <div class="list-group list-group-flush">
+            {% for book in books %}
+                {% if book.available %}
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between ">
+                        <h5 class="mb-1">{{ book.title }}</h5>
+                        <small>
+                            <a href="{{ path('book.borrow', {id: book.id}) }}" class="card-link badge rounded-pill bg-success">Emprunter</a>
+                        </small>
+                    </div>
+                    <em class="text-muted">Catégories : {{ book.formatCategories }}</em>
+                    <p class="mb-1"><small>{{ book.description }}</small></p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-warning">Aucun livre disponible actuellement !</p> 
+        {% endif %}
+    </div>
+{% endblock %}
